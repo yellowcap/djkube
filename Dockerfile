@@ -57,5 +57,3 @@ USER app
 
 RUN mkdir /home/app/staticfiles
 RUN python manage.py collectstatic
-
-CMD ["gunicorn", "djkube.wsgi:application", "--bind", "0.0.0.0:80"]

@@ -18,4 +18,4 @@ make docker-build
 ## To Do
 - Work with secrets for DB password
 - Make gunicorn command a variable
-- 
+- Check redis and postgres addresses are really the cluster head

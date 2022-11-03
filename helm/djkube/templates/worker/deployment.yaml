@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "djkube.fullname" . }}
+  name: {{ include "djkube.fullname" . }}-worker
   labels:
     {{- include "djkube.labels" . | nindent 4 }}
 spec:
@@ -27,15 +27,9 @@ spec:
       serviceAccountName: {{ include "djkube.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
-      initContainers:
-        - name: {{ .Chart.Name }}-init
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: ["python", "manage.py", "migrate"] 
       containers:
         - name: {{ .Chart.Name }}
+          command: ["celery", "-A", "djkube", "worker", "-l", "DEBUG"]
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
@@ -44,14 +38,26 @@ spec:
             - name: http
               containerPort: 80
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
           readinessProbe:
-            httpGet:
-              path: /
-              port: http
+            exec:
+              command:
+                [
+                  "python",
+                  "-c",
+                  '"import os;from celery.app.control import Inspect;from api import celery_app;exit(0 if os.environ[''HOSTNAME''] in '',''.join(Inspect(app=celery_app).stats().keys()) else 1)"',
+                ]
+            initialDelaySeconds: 120
+            periodSeconds: 300
+          livenessProbe:
+            exec:
+              command:
+                [
+                  "python",
+                  "-c",
+                  '"import os;from celery.app.control import Inspect;from api import celery_app;exit(0 if os.environ[''HOSTNAME''] in '',''.join(Inspect(app=celery_app).stats().keys()) else 1)"',
+                ]
+            initialDelaySeconds: 120
+            periodSeconds: 300
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

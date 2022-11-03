@@ -93,3 +93,5 @@ postgresql:
 
 redis:
   enabled: true
+  auth:
+    password: redispass

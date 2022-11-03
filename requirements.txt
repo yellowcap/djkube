@@ -1,3 +1,6 @@
 django
 gunicorn
 psycopg2-binary
+celery[redis]
+django-celery-results
+django-celery-beat

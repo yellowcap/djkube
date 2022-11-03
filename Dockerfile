@@ -16,11 +16,6 @@ ENV PYTHONUNBUFFERED 1
 RUN apk update \
     && apk add postgresql-dev gcc python3-dev musl-dev
 
-# install dependencies
-COPY ./requirements.txt .
-RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements.txt
-
-
 #########
 # FINAL #
 #########
@@ -42,12 +37,12 @@ WORKDIR $APP_HOME
 
 # install dependencies
 RUN apk update && apk add libpq
-COPY --from=builder /usr/src/app/wheels /wheels
-COPY --from=builder /usr/src/app/requirements.txt .
-RUN pip install --no-cache /wheels/*
 
 # copy project
 COPY . $APP_HOME
+
+# install dependencies
+RUN pip install -r ${APP_HOME}/requirements.txt
 
 # chown all the files to the app user
 RUN chown -R app:app $APP_HOME

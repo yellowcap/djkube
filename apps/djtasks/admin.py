@@ -1,5 +1,16 @@
 from django.contrib import admin
-from djtasks import Counter
+from djtasks.models import Counter
+from djtasks.tasks import increment_counter
 
-# Register your models here.
-admin.site.register(Counter)
+
+class CounterModelAdmin(admin.ModelAdmin):
+    actions = ['increment_counter', ]
+
+    def increment_counter(self, request, queryset):
+        for counter in queryset.all():
+            increment_counter.delay(counter.id)
+            
+        self.message_user(request, 'Started increment for {} counters.'.format(queryset.count()))
+
+
+admin.site.register(Counter, CounterModelAdmin)

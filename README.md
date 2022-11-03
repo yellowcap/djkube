@@ -19,3 +19,4 @@ make docker-build
 - Work with secrets for DB password
 - Make gunicorn command a variable
 - Check redis and postgres addresses are really the cluster head
+- Readyness and liveness probes for celery: https://github.com/celery/celery/issues/4079

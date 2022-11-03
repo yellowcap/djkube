@@ -5,10 +5,10 @@
 replicaCount: 1
 
 image:
-  repository: djkube
+  repository: yellowcap/djkube
   pullPolicy: Never
   # pullPolicy: IfNotPresent
-  command: gunicorn djkube.wsgi:application --bind 0.0.0.0:80
+  # command: ["gunicorn6", "djkube.wsgi:application", "--bind", "0.0.0.0:80"]
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
 
@@ -90,8 +90,6 @@ postgresql:
     replicaCount: 2
   auth:
     database: djkube
-    username: djkube
-
 
 redis:
   enabled: true

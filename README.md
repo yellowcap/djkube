@@ -16,8 +16,10 @@ if minkube and helm are installed.
 
 ```sh
 eval $(minikube docker-env)
+export POSTGRES_PASSWORD=pgpass
+export REDIS_PASSWORD=redispass
 make docker-build
-make helm-upgrade
+make helm-install
 ```
 
 ## Django setup

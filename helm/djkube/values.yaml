@@ -95,3 +95,5 @@ redis:
   enabled: true
   auth:
     password: redispass
+  replica:
+    replicaCount: 1

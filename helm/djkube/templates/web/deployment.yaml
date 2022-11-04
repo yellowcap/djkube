@@ -45,6 +45,17 @@ spec:
             - name: http
               containerPort: 80
               protocol: TCP
+          env:
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "djkube.fullname" . }}-postgresql
+                key: postgres-password
+          - name: REDIS_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "djkube.fullname" . }}-redis
+                key: redis-password
           livenessProbe:
             httpGet:
               path: /admin/

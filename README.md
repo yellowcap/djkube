@@ -52,7 +52,7 @@ See also
 https://stackoverflow.com/questions/42564058/how-to-use-local-docker-images-with-minikube
 
 ## Improvements
-- Work with secrets for pg and redis password
 - Make gunicorn and celery commands variables
 - Check redis and postgres addresses are really the cluster head
 - Readyness and liveness probes for celery: https://github.com/celery/celery/issues/4079
+- Reduce config replication between web and workers

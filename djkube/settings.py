@@ -75,24 +75,17 @@ WSGI_APPLICATION = "djkube.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-if not DEBUG:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
-        }
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "djkube",
+        "HOST": os.getenv("DJKUBE_POSTGRESQL_PRIMARY_SERVICE_HOST"),
+        "USER": "postgres",
+        "PORT": 5432,
+        "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
     }
-else:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.postgresql",
-            "NAME": "djkube",
-            "HOST": os.getenv("DJKUBE_POSTGRESQL_PRIMARY_SERVICE_HOST"),
-            "USER": "postgres",
-            "PORT": 5432,
-            "PASSWORD": "pgpass",
-        }
-    }
+}
 
 
 # Password validation
@@ -137,8 +130,11 @@ STATIC_ROOT = "/home/app/staticfiles"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# Celery
+
 CELERY_RESULT_BACKEND = "django-db"
-CELERY_BROKER_URL = "redis://:redispass@{}:6379/0".format(
-    os.getenv("DJKUBE_REDIS_MASTER_SERVICE_HOST")
+CELERY_BROKER_URL = "redis://:{}@{}:6379/0".format(
+    os.genenv("REDIS_PASSWORD"),
+    os.getenv("DJKUBE_REDIS_MASTER_SERVICE_HOST"),
 )
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers.DatabaseScheduler"

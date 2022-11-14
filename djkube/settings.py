@@ -134,7 +134,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CELERY_RESULT_BACKEND = "django-db"
 CELERY_BROKER_URL = "redis://:{}@{}:6379/0".format(
-    os.genenv("REDIS_PASSWORD"),
+    os.getenv("REDIS_PASSWORD"),
     os.getenv("DJKUBE_REDIS_MASTER_SERVICE_HOST"),
 )
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers.DatabaseScheduler"

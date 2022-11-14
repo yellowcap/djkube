@@ -4,6 +4,9 @@ dependencies:
   version: 12.0.1
 - name: redis
   repository: https://charts.bitnami.com/bitnami
-  version: 17.3.7
-digest: sha256:82c604749727a15b7fb8ddf14b74e2971e830ed4638fa4d1526333dc807bccac
-generated: "2022-11-02T17:47:21.749836219Z"
+  version: 17.3.10
+- name: ingress-nginx
+  repository: https://kubernetes.github.io/ingress-nginx
+  version: 4.4.0
+digest: sha256:29548e2e79bbeefdee4b901ffe96348e14a20c181eed37d0377be38da4486e17
+generated: "2022-11-14T14:13:32.786225261Z"

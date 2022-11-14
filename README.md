@@ -2,7 +2,7 @@
 Django and Celery on Kubernetes Helm using PostgreSQL and Redis backends. This is not yet
 a production ready setup but is following best practices wherever possible.
 
-The django part of this setup needs to be dockerized. the[PostgreSQL](https://artifacthub.io/packages/helm/bitnami/postgresql) 
+The django part of this setup needs to be dockerized. The [PostgreSQL](https://artifacthub.io/packages/helm/bitnami/postgresql) 
 and [Redis](https://artifacthub.io/packages/helm/bitnami/redis) backends use the standard 
 bitnami helm charts.
 

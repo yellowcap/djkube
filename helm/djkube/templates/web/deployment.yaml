@@ -36,7 +36,7 @@ spec:
           command: ["python", "manage.py", "migrate"] 
       containers:
         - name: {{ .Chart.Name }}
-          command: ["gunicorn", "djkube.wsgi:application", "--bind", "0.0.0.0:80"]
+          command: ["gunicorn", "djkube.wsgi:application", "--bind", "0.0.0.0:8080"]
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"

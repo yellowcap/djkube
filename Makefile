@@ -4,7 +4,7 @@ helm-install:
 	--set global.redis.password=${REDIS_PASSWORD}
 
 helm-upgrade:
-	helm install djkube helm/djkube
+	helm upgrade djkube helm/djkube
 
 helm-reset:
 	helm delete djkube

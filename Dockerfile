@@ -38,11 +38,12 @@ WORKDIR $APP_HOME
 # install dependencies
 RUN apk update && apk add libpq
 
+# install dependencies
+ADD requirements.txt ${APP_HOME}/requirements.txt
+RUN pip install -r ${APP_HOME}/requirements.txt
+
 # copy project
 COPY . $APP_HOME
-
-# install dependencies
-RUN pip install -r ${APP_HOME}/requirements.txt
 
 # chown all the files to the app user
 RUN chown -R app:app $APP_HOME

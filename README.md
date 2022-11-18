@@ -36,7 +36,7 @@ For setting up the first django user, run the create superuser command in one of
 the web pods. Get its name and run something along the lines of
 
 ```sh
-kubectl exec -it djkube-web-5785f5547b-b785p -- python manage.py createsuperuser
+kubectl exec -it svc/djkube-web -- python manage.py createsuperuser
 ```
 ## Use local images in minikube
 In development, the docker image for the django app can be built locally and

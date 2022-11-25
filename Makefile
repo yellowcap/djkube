@@ -30,6 +30,12 @@ upgrade-dependencies:
 	pip-compile -o requirements.txt pyproject.toml
 	pip-compile --extra dev -o dev-requirements.txt pyproject.toml
 
+install:
+	pip install -r requirements.txt
+
+dev-install:
+	pip install -r dev-requirements.txt
+
 lint:
 	black .
 	isort .

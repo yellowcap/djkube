@@ -1,0 +1,22 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "djkube"
+version = "0.0.1"
+dependencies = [
+    "django",
+    "gunicorn",
+    "psycopg2-binary",
+    "celery[redis]",
+    "django-celery-results",
+    "django-celery-beat",
+]
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "flake8",
+    "isort",
+]

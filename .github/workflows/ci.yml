@@ -1,0 +1,32 @@
+name: Continuous Integration for djkube
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  tests:
+    name: Django tests
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version:
+        - '3.9'
+        - '3.10'
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install djkube
+        run: python -m pip install .["dev"]
+      - name: Static checks
+        run: pre-commit run -a
+      - name: Run django tests
+        run: python manage.py test
